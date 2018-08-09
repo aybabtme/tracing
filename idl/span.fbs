@@ -1,0 +1,46 @@
+namespace me.aybabt.tracing;
+
+table Span {
+    context:SpanContext;
+    reference:SpanReference;
+    operation:string;
+    start:Timestamp;
+    finish:Timestamp;
+    tags:[KeyValue];
+    logs:[Log];
+}
+
+table SpanContext {
+    trace_id:ulong;
+    span_id:ulong;
+    baggages:[KeyValue];
+}
+
+table SpanReference {
+    child_of:[ulong];
+    follows_from:[ulong];
+}
+
+table ChildOf {
+    parent:SpanContext;
+}
+
+table FollowsFrom {
+    parent:SpanContext;
+}
+
+struct Timestamp {
+    unix_second:long;
+    unix_nanosecond:long;
+}
+
+table Log {
+    time:Timestamp;
+    data:[KeyValue];
+}
+
+table KeyValue {
+    key:string;
+    string_value:string;
+    numeric_value:double;
+}
